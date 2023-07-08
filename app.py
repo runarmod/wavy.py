@@ -39,11 +39,18 @@ def nomalize_params(params):
     return {k: normalized_param(k, v) for k, v in query_params.items() if k in params}
 
 
+@app.route("/")
+def index():
+    return "Hello, World!\nCheck https://github.com/runarmod/wavy for more info.\n"
+
+
 @app.route("/api/wave")
 def wave():
     wavy = create_wavy()
 
-    return send_file(io.BytesIO(bytes(wavy.generate_wave(), encoding="utf-8")), mimetype="image/svg+xml")
+    return send_file(
+        io.BytesIO(bytes(wavy.generate_wave(), encoding="utf-8")), mimetype="image/svg+xml"
+    )
 
 
 @app.route("/api/waves")
