@@ -2,7 +2,7 @@
 
 ## What is wavy?
 
-Wavy is a simple api written with python and flask which creates beautiful SVG waves. Usefull for backgrounds, headers, etc.
+Wavy is a simple api written with python and flask which creates beautiful SVG waves. Useful for backgrounds, headers, etc.
 
 ## Endpoints
 
@@ -46,17 +46,21 @@ Endpoint for creating multiple waves at the same time. Option to seamlessly go f
 ### /api/wave
 
 Params: `width=1920&height=1080&color=00ffff&start=0.4&wonkyness=4&points=5&resolution=100`
-![/api/wave](http://127.0.0.1:5000/api/wave?width=1920&height=1080&color=00ffff&start=0.4&wonkyness=4&points=5&resolution=100)
+
+![/api/wave](https://wavy-runarmod.vercel.app/api/wave?width=1920&height=1080&color=00ffff&start=0.4&wonkyness=4&points=5&resolution=100)
 
 Params: `width=1920&height=1080&color=78fa67&start=0.4&wonkyness=4&points=5&resolution=6`
-![/api/wave](http://127.0.0.1:5000/api/wave?width=1920&height=1080&color=78fa67&start=0.4&wonkyness=4&points=5&resolution=6)
+
+![/api/wave](https://wavy-runarmod.vercel.app/api/wave?width=1920&height=1080&color=78fa67&start=0.4&wonkyness=4&points=5&resolution=6)
 
 Params: `width=1920&height=1080&color=e7233a&start=0.7&wonkyness=8&points=8`
-![/api/wave](http://127.0.0.1:5000/api/wave?width=1920&height=1080&color=e7233a&start=0.7&wonkyness=8&points=8)
+
+![/api/wave](https://wavy-runarmod.vercel.app/api/wave?width=1920&height=1080&color=e7233a&start=0.7&wonkyness=8&points=8)
 
 Params: `color=777&points=100&resolution=500&wonkyness=10`
-![/api/wave](http://127.0.0.1:5000/api/wave?color=777&points=100&resolution=500)
 
+![/api/wave](https://wavy-runarmod.vercel.app/api/wave?color=777&points=100&resolution=500)
 
 ## License
+
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

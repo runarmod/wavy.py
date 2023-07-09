@@ -1,5 +1,6 @@
 import pathlib
 import random
+
 from b_spline import generate_estimated_coords
 
 
@@ -62,8 +63,6 @@ class Wavy:
     def set_resolution(self, resolution: int) -> None:
         if resolution <= 0:
             raise ValueError("Resolution must be positive")
-        if resolution > self.width:
-            raise ValueError("Resolution must be less than width")
         self.resolution = resolution
 
     def generate_y(self) -> float:

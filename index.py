@@ -1,4 +1,5 @@
 import io
+
 from flask import Flask, request, send_file
 from flask_cors import CORS
 
@@ -29,12 +30,12 @@ def create_wavy():
         "resolution",
         "only_include",
     }
-    params = nomalize_params(wave_args)
+    params = normalize_params(wave_args)
 
     return Wavy(**params)
 
 
-def nomalize_params(params):
+def normalize_params(params):
     query_params = request.args.to_dict(flat=False)
     return {k: normalized_param(k, v) for k, v in query_params.items() if k in params}
 
@@ -58,6 +59,6 @@ def waves():
     wavy = create_wavy()
 
     options_args = {"layers", "start_color", "end_color", "start_y", "end_y"}
-    params = nomalize_params(options_args)
+    params = normalize_params(options_args)
 
     return wavy.generate_waves(**params)
