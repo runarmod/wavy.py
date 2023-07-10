@@ -12,24 +12,20 @@ Default endpoint for creating a wave.
 
 #### Parameters
 
-| Parameter      | Type    | Description                                                     | Default  |
-| -------------- | ------- | --------------------------------------------------------------- | -------- |
-| `width`        | `int`   | The width of the wave                                           | `1920`   |
-| `height`       | `int`   | The height of the wave                                          | `1080`   |
-| `color`        | `str`   | The color of the wave                                           | `78fa67` |
-| `start`        | `float` | The start of the wave (between 0 and 1)                         | `0.4`    |
-| `wonkyness`    | `int`   | The wonkyness of the wave                                       | `4`      |
-| `points`       | `int`   | The amount of points in the wave                                | `5`      |
-| `resolution`   | `int`   | The resolution of the wave, i.e. line-segment count             | `100`    |
-| `only_include` | `str`   | The only values to return. Example: "path", "color", "width"... | `None`   |
-
-#### Disclamer
-
-If no `only_include` parameter is given, the api will return the full svg. If you only want the path, you can use the `only_include` parameter to only return the actual path.
+| Parameter    | Type    | Description                                         | Default  |
+| ------------ | ------- | --------------------------------------------------- | -------- |
+| `width`      | `int`   | The width of the wave                               | `1920`   |
+| `height`     | `int`   | The height of the wave                              | `1080`   |
+| `color`      | `str`   | The color of the wave                               | `78fa67` |
+| `start`      | `float` | The start of the wave (between 0 and 1)             | `0.4`    |
+| `wonkyness`  | `float` | The wonkyness of the wave                           | `4.0`      |
+| `points`     | `int`   | The amount of points in the wave                    | `5`      |
+| `resolution` | `int`   | The resolution of the wave, i.e. line-segment count | `100`    |
+| `format`     | `str`   | The format to return (svg or json)                  | `svg`    |
 
 ### /api/waves
 
-Endpoint for creating multiple waves at the same time. Option to seamlessly go from one color for the first wave to another for the last wave. Has the same parameters as `/api/wave` but with the following additional parameters.
+Endpoint for creating multiple waves at the same time. Option to seamlessly go from one color for the first wave to another for the last wave. Has the same parameters as `/api/wave` (though format will be set to json regardless) but with the following additional parameters.
 
 #### Parameters
 

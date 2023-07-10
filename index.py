@@ -9,17 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-def normalized_param(key, value):
-    if len(value) > 1:
-        return set(value)
-    if key in ("start", "wonkyness", "start_y", "end_y"):
-        return float(value[0])
-    return (
-        int(value[0]) if key in ("width", "height", "points", "layers", "resolution") else value[0]
-    )
-
-
-def create_wavy():
+def create_wavy() -> Wavy:
     wave_args = {
         "width",
         "height",
@@ -28,14 +18,22 @@ def create_wavy():
         "points",
         "wonkyness",
         "resolution",
-        "only_include",
+        "format",
     }
     params = normalize_params(wave_args)
 
-    return Wavy(**params)
+    return Wavy(**params)  # type: ignore
 
 
-def normalize_params(params):
+def normalized_param(key: str, value: str | list[str]) -> str | int | float:
+    if key in ("start", "wonkyness", "start_y", "end_y"):
+        return float(value[0])
+    return (
+        int(value[0]) if key in ("width", "height", "points", "layers", "resolution") else value[0]
+    )
+
+
+def normalize_params(params: set[str]) -> dict[str, str | int | float | set[str]]:
     query_params = request.args.to_dict(flat=False)
     return {k: normalized_param(k, v) for k, v in query_params.items() if k in params}
 
@@ -49,16 +47,19 @@ def index():
 def wave():
     wavy = create_wavy()
 
-    return send_file(
-        io.BytesIO(bytes(wavy.generate_wave(), encoding="utf-8")), mimetype="image/svg+xml"
-    )
+    if wavy.format == "svg":
+        return send_file(
+            io.BytesIO(bytes(str(wavy.generate_wave()), encoding="utf-8")), mimetype="image/svg+xml"
+        )
+    return wavy.generate_wave()
 
 
 @app.route("/api/waves")
 def waves():
     wavy = create_wavy()
+    wavy.set_format("json")
 
     options_args = {"layers", "start_color", "end_color", "start_y", "end_y"}
     params = normalize_params(options_args)
 
-    return wavy.generate_waves(**params)
+    return wavy.generate_waves(**params)  # type: ignore

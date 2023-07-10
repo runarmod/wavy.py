@@ -11,10 +11,10 @@ class Wavy:
         height: int = 1080,
         color: str = "78fa67",
         start: float = 0.4,
-        wonkyness: int = 4,
+        wonkyness: float = 4.0,
         points: int = 5,
         resolution: int = 100,
-        only_include: set = None,
+        format: str = "svg",
     ):
         self.set_width(width)
         self.set_height(height)
@@ -23,7 +23,7 @@ class Wavy:
         self.set_wonkyness(wonkyness)
         self.set_points(points)
         self.set_resolution(resolution)
-        self.only_include = set() if only_include is None else only_include
+        self.set_format(format)
         self.base = pathlib.Path("base.svg").read_text()
 
     def set_width(self, width: int) -> None:
@@ -48,7 +48,7 @@ class Wavy:
             raise ValueError("Start must be between 0 and 1")
         self.startY = start
 
-    def set_wonkyness(self, wonkyness: int) -> None:
+    def set_wonkyness(self, wonkyness: float) -> None:
         if wonkyness <= 0:
             raise ValueError("Wonkyness must be positive")
         self.wonkyness = wonkyness
@@ -65,14 +65,23 @@ class Wavy:
             raise ValueError("Resolution must be positive")
         self.resolution = resolution
 
+    def set_format(self, format: str) -> None:
+        if format not in {"svg", "json"}:
+            raise ValueError("Format must be svg or json")
+        self.format = format
+
+    def generate_x(self, x: float, available_width: float) -> float:
+        return x + (random.random() - 0.5) / available_width
+
     def generate_y(self) -> float:
         return (random.random() - 0.5) * 0.05 * self.wonkyness + self.startY
 
-    def generate_coords(self) -> list[tuple[float, float]]:
+    def generate_coords(self) -> tuple[list[float], list[float]]:
         coords = []
         for i in range(self.points):
-            point1Y = self.generate_y()
-            coords.append((i / (self.points + 1), point1Y))
+            point1Y = max(0, min(1, self.generate_y()))
+            point1X = self.generate_x(i / (self.points + 1), self.width / (self.points + 1))
+            coords.append((point1X, point1Y))
         coords.append((1, self.startY))
         return generate_estimated_coords(*zip(*coords), n=self.resolution)
 
@@ -83,10 +92,10 @@ class Wavy:
         out += "V 1 H 0 Z"
         return out
 
-    def generate_wave(self) -> str:
+    def generate_wave(self) -> str | dict[str, str | int | float]:
         x_coords, y_coords = self.generate_coords()
         self.svg_path = self.generate_svg_path(x_coords, y_coords)
-        if len(self.only_include) != 0:
+        if self.format == "json":
             return self.get_return_dict()
         return (
             self.base.replace("{width}", str(self.width))
@@ -96,35 +105,25 @@ class Wavy:
         )
 
     def get_return_dict(self):
-        d = {}
-        _all = "all" in self.only_include
-
-        if _all or "path" in self.only_include:
-            d["path"] = self.svg_path
-
-        if _all or "color" in self.only_include:
-            d["color"] = f"#{self.color}"
-
-        if _all or "width" in self.only_include:
-            d["width"] = self.width
-
-        if _all or "height" in self.only_include:
-            d["height"] = self.height
-
-        if _all or "wonkyness" in self.only_include:
-            d["wonkyness"] = self.wonkyness
-
-        if _all or "points" in self.only_include:
-            d["points"] = self.points
-
-        if _all or "resolution" in self.only_include:
-            d["resolution"] = self.resolution
+        d = {
+            "path": self.svg_path,
+            "color": f"#{self.color}",
+            "width": self.width,
+            "height": self.height,
+            "wonkyness": self.wonkyness,
+            "points": self.points,
+            "resolution": self.resolution,
+            "start": self.startY,
+        }
         return d
 
     def interpolate_color(self, start_color: str, end_color: str, t: float) -> str:
-        start_color = [int(start_color[i : i + 2], 16) for i in (0, 2, 4)]
-        end_color = [int(end_color[i : i + 2], 16) for i in (0, 2, 4)]
-        color = [round(start_color[i] + (end_color[i] - start_color[i]) * t) for i in range(3)]
+        start_color_list = [int(start_color[i : i + 2], 16) for i in (0, 2, 4)]
+        end_color_list = [int(end_color[i : i + 2], 16) for i in (0, 2, 4)]
+        color = [
+            round(start_color_list[i] + (end_color_list[i] - start_color_list[i]) * t)
+            for i in range(3)
+        ]
         return "".join(hex(i)[2:].zfill(2) for i in color)
 
     def generate_waves(
