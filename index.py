@@ -25,7 +25,7 @@ def create_wavy() -> Wavy:
     return Wavy(**params)  # type: ignore
 
 
-def normalized_param(key: str, value: str | list[str]) -> str | int | float:
+def normalized_param(key: str, value):
     if key in ("start", "wonkyness", "start_y", "end_y"):
         return float(value[0])
     return (
@@ -33,7 +33,7 @@ def normalized_param(key: str, value: str | list[str]) -> str | int | float:
     )
 
 
-def normalize_params(params: set[str]) -> dict[str, str | int | float | set[str]]:
+def normalize_params(params):
     query_params = request.args.to_dict(flat=False)
     return {k: normalized_param(k, v) for k, v in query_params.items() if k in params}
 

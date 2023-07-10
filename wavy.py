@@ -76,7 +76,7 @@ class Wavy:
     def generate_y(self) -> float:
         return (random.random() - 0.5) * 0.05 * self.wonkyness + self.startY
 
-    def generate_coords(self) -> tuple[list[float], list[float]]:
+    def generate_coords(self):
         coords = []
         for i in range(self.points):
             point1Y = max(0, min(1, self.generate_y()))
@@ -85,14 +85,14 @@ class Wavy:
         coords.append((1, self.startY))
         return generate_estimated_coords(*zip(*coords), n=self.resolution)
 
-    def generate_svg_path(self, x_coords: list[float], y_coords: list[float]) -> str:
+    def generate_svg_path(self, x_coords, y_coords) -> str:
         out = f"M 0 {y_coords[0]} "
         for x, y in zip(x_coords[1:], y_coords[1:]):
             out += f"L {x} {y} "
         out += "V 1 H 0 Z"
         return out
 
-    def generate_wave(self) -> str | dict[str, str | int | float]:
+    def generate_wave(self):
         x_coords, y_coords = self.generate_coords()
         self.svg_path = self.generate_svg_path(x_coords, y_coords)
         if self.format == "json":
@@ -133,7 +133,7 @@ class Wavy:
         end_color: str = "01051e",
         start_y: float = 0.2,
         end_y: float = 0.5,
-    ) -> list[str]:
+    ):
         result = []
         for i in range(layers):
             color = self.interpolate_color(start_color, end_color, i / (layers - 1))
