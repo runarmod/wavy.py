@@ -47,15 +47,15 @@ Params: [`width=1920&height=1080&color=00ffff&start=0.4&wonkyness=4&points=5&res
 
 ![/api/wave](https://wavy.runarmod.no/api/wave?width=1920&height=1080&color=00ffff&start=0.4&wonkyness=4&points=5&resolution=100)
 
-Params: [`width=1920&height=1080&color=78fa67&start=0.4&wonkyness=4&points=5&resolution=6`](https://wavy.runarmod.no/api/width=1920&height=1080&color=78fa67&start=0.4&wonkyness=4&points=5&resolution=6)
+Params: [`width=1920&height=1080&color=78fa67&start=0.4&wonkyness=4&points=5&resolution=6`](https://wavy.runarmod.no/api/wave?width=1920&height=1080&color=78fa67&start=0.4&wonkyness=4&points=5&resolution=6)
 
 ![/api/wave](https://wavy.runarmod.no/api/wave?width=1920&height=1080&color=78fa67&start=0.4&wonkyness=4&points=5&resolution=6)
 
-Params: [`width=1920&height=1080&color=e7233a&start=0.7&wonkyness=8&points=8`](https://wavy.runarmod.no/api/width=1920&height=1080&color=e7233a&start=0.7&wonkyness=8&points=8)
+Params: [`width=1920&height=1080&color=e7233a&start=0.7&wonkyness=8&points=8`](https://wavy.runarmod.no/api/wave?width=1920&height=1080&color=e7233a&start=0.7&wonkyness=8&points=8)
 
 ![/api/wave](https://wavy.runarmod.no/api/wave?width=1920&height=1080&color=e7233a&start=0.7&wonkyness=8&points=8)
 
-Params: [`color=777&points=45&resolution=500&wonkyness=10`](https://wavy.runarmod.no/api/color=777&points=45&resolution=500&wonkyness=10)
+Params: [`color=777&points=45&resolution=500&wonkyness=10`](https://wavy.runarmod.no/api/wave?color=777&points=45&resolution=500&wonkyness=10)
 
 ![/api/wave](https://wavy.runarmod.no/api/wave?color=777&points=45&resolution=500&wonkyness=10)
 
