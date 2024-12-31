@@ -80,7 +80,9 @@ class Wavy:
         coords = []
         for i in range(self.points):
             point1Y = max(0, min(1, self.generate_y()))
-            point1X = self.generate_x(i / (self.points + 1), self.width / (self.points + 1))
+            point1X = self.generate_x(
+                i / (self.points + 1), self.width / (self.points + 1)
+            )
             coords.append((point1X, point1Y))
         coords.append((1, self.startY))
         return generate_estimated_coords(*zip(*coords), n=self.resolution)
