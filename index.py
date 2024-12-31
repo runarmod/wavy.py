@@ -29,7 +29,9 @@ def normalized_param(key: str, value):
     if key in ("start", "wonkyness", "start_y", "end_y"):
         return float(value[0])
     return (
-        int(value[0]) if key in ("width", "height", "points", "layers", "resolution") else value[0]
+        int(value[0])
+        if key in ("width", "height", "points", "layers", "resolution")
+        else value[0]
     )
 
 
@@ -49,7 +51,8 @@ def wave():
 
     if wavy.format == "svg":
         return send_file(
-            io.BytesIO(bytes(str(wavy.generate_wave()), encoding="utf-8")), mimetype="image/svg+xml"
+            io.BytesIO(bytes(str(wavy.generate_wave()), encoding="utf-8")),
+            mimetype="image/svg+xml",
         )
     return wavy.generate_wave()
 
